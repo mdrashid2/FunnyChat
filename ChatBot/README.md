@@ -11,7 +11,7 @@ This is a coding assignment project wriiten in Python/Django
 
 - User can choose joke any options  ` fat, dumb, stupid `
 - After clicking on button user will get funny response through websocket.
-![Login Page](screenshot/home.png "Home Page")
+![Login Page](screenshot/chat.png "Home Page")
 
 - There is an Options of Audit page, where user can see button clicked audits.
 ![Login Page](screenshot/audit.png "Audit Page")
