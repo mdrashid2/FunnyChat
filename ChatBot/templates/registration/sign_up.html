@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Registration{% endblock title %}
+
+{% block head %}
+<style>
+input{
+    width : 100%;
+    border-radius : 5px;
+}
+form{
+    padding : 20px;
+    border : 1px solid grey;
+}
+label {
+    font-weight : bolder;
+}
+</style>
+
+{% endblock head %}
+
+{% block content %}
+<div class="container">
+<h3 class="mt-5">Register</h3>
+<form  method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input class="btn btn-primary" type="submit" value="Sign up">
+    <center><a href="/accounts/login">Already have an account ? login here</a></center>
+</form>
+</div>
+{% endblock content %}

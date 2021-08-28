@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home Page{% endblock title %}
+
+{% block head %}
+<style>
+#chatBox{
+    border : 1px solid grey;
+    border-radius : 5px;
+    height : 500px;
+}
+
+#messages{
+    height:80%;
+    padding : 4px;
+    overflow-y : auto;
+}
+
+.my{
+    background-color : lightblue;
+    padding:2px;
+    border-radius : 5px;
+}
+
+.bot{
+    background-color : orange;
+    padding:2px;
+    border-radius : 5px;
+}
+
+#chatBox > nav {
+    background-color : black;
+    color : yellow;
+    padding: 4px;
+    font-weight :bolder;
+    font-size : 1.2em;
+}
+</style>
+
+{% endblock head %}
+
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+        <div class="col-md-4 mt-4 mx-auto">
+            <div id="chatBox" class="pb-2">
+            <nav>Help Section</nav>
+            <div id="messages">
+            </div>
+            <hr>
+            <button onclick="message(this)" class="btn btn-sm btn-warning ml-2" value="fat">Fat</button>
+            <button onclick="message(this)" class="btn btn-sm btn-warning" value="stupid">Stupid</button>
+            <button onclick="message(this)" class="btn btn-sm btn-warning" value="dumb">Dumb</button>
+            <div>
+        </div>
+        </div>
+    </div>
+    
+   
+{% endblock content %}
+
+{% block javascript %}
+<script src="{% static 'index.js' %}" ></script>
+ <script>
+
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/' 
+            + 'test-room'
+        );
+
+        chatSocket.onopen = function (e){
+            console.log('Connected')
+        }
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            let message = document.querySelector('#messages');
+            let span = document.createElement('span');
+            let br = document.createElement('br');
+            span.innerText = data.message;
+            span.setAttribute('class','bot');
+            message.appendChild(span);
+            message.appendChild(br);
+            
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        function message(ele){
+            let message = document.querySelector('#messages');
+            let span = document.createElement('span');
+            let br = document.createElement('br');
+            span.innerText = ele.value;
+            span.setAttribute('class','my float-right');
+            message.appendChild(span);
+            message.appendChild(br);
+            chatSocket.send(JSON.stringify({
+                'message': ele.value
+            }));
+        }
+
+    </script>
+
+{% endblock %}

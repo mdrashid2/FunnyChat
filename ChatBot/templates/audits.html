@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Audit{% endblock title %}
+
+{% block head %}
+<style>
+input{
+    width : 100%;
+    border-radius : 5px;
+}
+form{
+    padding : 20px;
+    border : 1px solid grey;
+}
+label {
+    font-weight : bolder;
+}
+</style>
+
+{% endblock head %}
+
+{% block content %}
+<div class="container">
+<h3 class="mt-5">Button Clicked Audits</h3>
+<table class="table ">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Username</th>
+      <th scope="col">Fat</th>
+      <th scope="col">Dumb</th>
+      <th scope="col">Stupid</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for audit in audits %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{audit.user.username}}</td>
+      <td>{{audit.fat}}</td>
+      <td>{{audit.dumb}}</td>
+      <td>{{audit.stupid}}</td>
+    </tr>
+{% empty %}
+    <tr>
+        <td colspan="5">No Records!</td>
+    </tr>
+{% endfor %} 
+  </tbody>
+</table>
+</div>
+{% endblock content %}
